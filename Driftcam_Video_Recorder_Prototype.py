@@ -61,7 +61,9 @@ print("Output File : " + filename_str)
 #flip = 2
 #DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
 #DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=3264, height=2464, format=NV12, framerate=21/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
-DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! nvv4l2h264enc ! bitrate-30000000 ! h264parse ! qtmux ! filesink" + filename_str
+#DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! nvv4l2h264enc ! bitrate=30000000 ! h264parse ! qtmux ! filesink location=" + filename_str
+#DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc bitrate=6000000 peak-bitrate=6500000 ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
+DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc bitrate=30000000 peak-bitrate=40000000 ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--pipeline", required=False,
@@ -100,7 +102,7 @@ GPIO.output(idle_flag_out, GPIO.LOW)
 
 #While recording, poll record signal line and wait until signal goes LOW (not used in this prototype)
 
-time.sleep(30)
+time.sleep(10)
 
 #Generate an EOS Message
 print("pipeline.send_event(Gst.Event.new_eos())")
