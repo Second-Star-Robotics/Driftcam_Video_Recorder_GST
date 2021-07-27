@@ -44,6 +44,10 @@ GPIO.setup(idle_flag_out, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.output(idle_flag_out, GPIO.HIGH)
 GPIO.setup(record_enable_in, GPIO.IN)  # set pin as an input pin
 
+# FIELD TEST CODE START
+time.sleep(30)
+# END OF FIELD TEST CODE
+
 while True:
     # Poll Record Line Until High
     print("Waiting for Record Signal")
@@ -65,8 +69,7 @@ while True:
     #dispW = 960
     #dispH = 570
     #flip = 2
-    #DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
-    DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc bitrate=30000000 peak-bitrate=40000000 ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
+    DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
 
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--pipeline", required=False,
