@@ -62,14 +62,18 @@ while True:
 
     # Generate GStreamer Pipeline String
     path_str = "/media/d5bf101c-0cdc-4135-8784-7ee065ff5ea2/captures/"
-    filename_str = path_str + time.strftime("%Y%m%d-%H%M%S-Capture") + ".mp4"
+    #filename_str = path_str + time.strftime("%Y%m%d-%H%M%S-Capture") + ".mp4"
+    filename_str = path_str + time.strftime("%Y%m%d-%H%M%S-Capture")
     print("Output File : " + filename_str)
     #capW = 1920
     #capH = 1080
     #dispW = 960
     #dispH = 570
     #flip = 2
-    DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
+    #DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! qtmux ! filesink location=" + filename_str
+    DEFAULT_PIPELINE="nvarguscamerasrc ! video/x-raw(memory:NVMM), width=1920, height=1080, format=NV12, framerate=30/1 ! omxh264enc ! video/x-h264, stream-format=(string)byte-stream ! h264parse ! splitmuxsink location=" + filename_str + "%05d.mp4 max-size-time=300000000000"
+
+
 
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--pipeline", required=False,
